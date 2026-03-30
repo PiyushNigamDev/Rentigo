@@ -640,7 +640,7 @@ let carFilter= carsList.filter((v)=>v.name.toLowerCase().includes(search))
     <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
       scrolled ? "bg-white/80 backdrop-blur-lg shadow-xl py-2" : "bg-blue-600 py-4 text-white"
     }`}>
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
@@ -689,6 +689,52 @@ let carFilter= carsList.filter((v)=>v.name.toLowerCase().includes(search))
           </button>
         </div>
       </div>
+
+
+
+{mobileOpen && (
+  <div className="md:hidden bg-blue-600 text-white px-4 py-4 space-y-4">
+
+    {/* 🔍 Search */}
+    <div className="relative">
+      <input
+        type="text"
+        placeholder="Search cars..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value.toLowerCase())}
+        className="w-full pl-10 pr-4 py-2 rounded-full text-gray-800 outline-none"
+      />
+      <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+    </div>
+
+    
+    <button
+      onClick={() => {
+        setOpenModal(true);
+        setMobileOpen(false);
+      }}
+      className="w-full bg-white text-blue-600 font-semibold py-2 rounded-xl shadow"
+    >
+      Book Appointment
+    </button>
+
+    {/* 👤 Account */}
+    <Link
+      to="/signin"
+      onClick={() => setMobileOpen(false)}
+      className="flex items-center justify-center gap-2 w-full border border-white py-2 rounded-xl"
+    >
+      <FiUser size={18} />
+      Account
+    </Link>
+
+  </div>
+)}
+
+
+
+
+
        { search&&
         
       (  <div className="absolute bg-white top-16 left-1/2 rounded-md ">
@@ -705,8 +751,7 @@ let carFilter= carsList.filter((v)=>v.name.toLowerCase().includes(search))
         </div>
       )}   
 
-      {/* --- APPOINTMENT MODAL --- */}
-      {openModal && (
+       {openModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setOpenModal(false)} />
           
@@ -787,8 +832,16 @@ let carFilter= carsList.filter((v)=>v.name.toLowerCase().includes(search))
             </div>
           </div>
         </div>
+
+
+
+
+
       )}
     </nav>
+
+
+
   );
 }
  
@@ -796,3 +849,4 @@ let carFilter= carsList.filter((v)=>v.name.toLowerCase().includes(search))
 
 export default Navbar;
 
+//  
