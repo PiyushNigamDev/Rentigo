@@ -46,7 +46,7 @@ const nav=useNavigate();
 const signUp=async(e)=>{
   e.preventDefault();
   try{
-const register=await axios.post("http://localhost:5000/user/register",{
+const register=await axios.post("https://rentigo-xhqk.onrender.com/user/register",{
   name,
   email,
   password

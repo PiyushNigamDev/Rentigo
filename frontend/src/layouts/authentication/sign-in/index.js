@@ -61,7 +61,7 @@ function Basic() {
 
     try {
       
-   const login=await axios.post("http://localhost:5000/user/login",
+   const login=await axios.post("https://rentigo-xhqk.onrender.com/user/login",
     form,{
       headers:{
         Authorization:`Bearer ${token}`

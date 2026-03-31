@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       axios
-        .get("http://localhost:5000/api/auth/me", {
+        .get("https://rentigo-xhqk.onrender.com/api/auth/me", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => setUser(res.data.user))
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     const res = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      "https://rentigo-xhqk.onrender.com/api/auth/login",
       data
     );
     localStorage.setItem("token", res.data.token);
