@@ -7,8 +7,8 @@ import { getAppoint } from "./controller/appointment.controller.js";
 import { vendorGet } from "./controller/vendor.controller.js";
 import userModel from "./model/user.model.js";
 import carModel from "./model/car.model.js";
+ dotenv.config();
 connectDB();
-dotenv.config();
 
 const app=express();
 app.use(express.json());
