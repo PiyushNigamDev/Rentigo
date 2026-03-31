@@ -40,7 +40,7 @@ export default function data() {
 const [getData,setGetData]=useState([]);
   const gets=async()=>{
     try{
-    const get=await axios.get("http://localhost:5000/user/");
+    const get=await axios.get("https://rentigo-xhqk.onrender.com/user/");
     setGetData(get.data.data);
     console.log(get.data.data)
   }catch(err){
@@ -78,7 +78,7 @@ const [editModal,setEditModal]=useState(false);
     formData.append("price",price);
     formData.append("car_number",car_number);
     formData.append("thumbnail",thumbnail);
-const update=await axios.put(`http://localhost:5000/user/${id}`, formData);
+const update=await axios.put(`https://rentigo-xhqk.onrender.com/user/${id}`, formData);
 console.log(update.data);
 setUpdated(update.data);
 Swal.fire({
@@ -101,7 +101,7 @@ icon:"error"
 const [deletedd,setDeleted]=useState({});
   const deletes= async(id)=>{
     try{
-const Deleted=await axios.delete(`http://localhost:5000/user/${id}`);
+const Deleted=await axios.delete(`https://rentigo-xhqk.onrender.com/user/${id}`);
 setDeleted(Deleted.data);
  gets();
      }catch(err){

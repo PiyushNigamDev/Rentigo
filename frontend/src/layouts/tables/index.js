@@ -51,7 +51,7 @@ const [openModal,setOpenModal]=useState(false);
 
 const getCars11=async()=>{
   try{
-const gettss=  await   axios.get(`http://localhost:5000/user/`);
+const gettss=  await   axios.get(`https://rentigo-xhqk.onrender.com/user/`);
 setCarBooked1(gettss.data.data);
 console.log("get the car",gettss.data.data);
   }catch(err){
@@ -65,7 +65,7 @@ getCars11()
 const VendorRegister=async(e)=>{
   e.preventDefault();
   try{
-const register=await axios.post("http://localhost:5000/user/createVendor",{
+const register=await axios.post("https://rentigo-xhqk.onrender.com/user/createVendor",{
   name,
   mobile,
   bookingDate,

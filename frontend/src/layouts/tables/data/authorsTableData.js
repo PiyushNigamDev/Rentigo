@@ -25,7 +25,7 @@ const [getData,setGetData]=useState([]);
 // const [openModal,setModal]=useState(false);
 const VendorGet=async()=>{
    try{
-  const gett=await axios.get("http://localhost:5000/getvendor");
+  const gett=await axios.get("https://rentigo-xhqk.onrender.com/getvendor");
   
 setGetData(gett.data.data)
 console.log(gett.data.data)
@@ -54,7 +54,7 @@ const [selectedId, setSelectedId] = useState(null);
 
 const getCars=async()=>{
   try{
-const gettss=await axios.get("http://localhost:5000/user");
+const gettss=await axios.get("https://rentigo-xhqk.onrender.com/user");
 setCarBookedId(gettss.data.data);
 console.log("get in update",gettss.data.data);
   }catch(err){
@@ -72,7 +72,7 @@ getCars();
 
 const updateVendor=async(id)=>{
   try{
-    const update=await axios.put(`http://localhost:5000/user/updateVendor/${id}`,{
+    const update=await axios.put(`https://rentigo-xhqk.onrender.com/user/updateVendor/${id}`,{
       name,
       mobile,
       bookingDate,
@@ -102,7 +102,7 @@ VendorGet();
 const [del,setDel]=useState({});
 const Deleted=async(id)=>{
   try{
-  const Delete=await axios.delete(`http://localhost:5000/user/delete/${id}`);
+  const Delete=await axios.delete(`https://rentigo-xhqk.onrender.com/user/delete/${id}`);
   setDel(Delete);
   console.log(Delete);
   VendorGet();

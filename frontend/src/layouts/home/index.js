@@ -576,7 +576,7 @@ const Home = () => {
   useEffect(() => {
     const getCars = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/user/");
+        const response = await axios.get("https://rentigo-xhqk.onrender.com/user/");
         setCar(response.data.data);
       } catch (err) {
         console.error(err);
@@ -705,7 +705,7 @@ const [type,setType]=useState("");
               {/* Image Container */}
               <div className="relative h-60 overflow-hidden">
                 <img
-                  src={`http://localhost:5000/${item.thumbnail}`}
+                  src={`https://rentigo-xhqk.onrender.com/${item.thumbnail}`}
                   alt={item.name}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />

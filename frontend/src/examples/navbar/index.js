@@ -31,7 +31,7 @@
 // const apps=async(e)=>{
 //   e.preventDefault();
 //   try{
-// const appoint=await axios.post("http://localhost:5000/user/appointments",{
+// const appoint=await axios.post("https://rentigo-xhqk.onrender.com/user/appointments",{
 //   name,
 //   bookingDate,
 //   returnDate,
@@ -68,7 +68,7 @@
 // const [vendorss,setVendor]=useState([]);
 // const vendorGet=async()=>{
 //   try{
-// const vendors=await axios.get("http://localhost:5000/getVendor");
+// const vendors=await axios.get("https://rentigo-xhqk.onrender.com/getVendor");
 // setVendor(vendors.data.data);
 // console.log(vendors.data.data);
 //   }catch(err){
@@ -80,7 +80,7 @@
 // const [carss,setCar]=useState("");
 // const cars=async()=>{
 //   try{
-//     const carss=await axios.get("http://localhost:5000/user/");
+//     const carss=await axios.get("https://rentigo-xhqk.onrender.com/user/");
 //     setCar(carss.data.data);
 
 //   }catch(err){
@@ -609,8 +609,8 @@ function Navbar() {
     const fetchData = async () => {
       try {
         const [vRes, cRes] = await Promise.all([
-          axios.get("http://localhost:5000/getvendor"),
-          axios.get("http://localhost:5000/user/")
+          axios.get("https://rentigo-xhqk.onrender.com/getvendor"),
+          axios.get("https://rentigo-xhqk.onrender.com/user/")
         ]);
         setVendorsList(vRes.data.data);
         setCarsList(cRes.data.data);
@@ -626,7 +626,7 @@ function Navbar() {
   const handleAppointment = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/user/appointments", {
+      await axios.post("https://rentigo-xhqk.onrender.com/user/appointments", {
         name, bookingDate, returnDate, pickUp, dropPoint, email, car: carId, vendor: vendorId, status
       });
       setOpenModal(false);

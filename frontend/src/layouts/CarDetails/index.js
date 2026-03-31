@@ -23,7 +23,7 @@
 // // //     const [car,setCar]=useState({})
 // // //     const getCarById=async()=>{
 // // //       try{
-// // //     const ids=await axios.get(`http://localhost:5000/user/${id}`);
+// // //     const ids=await axios.get(`https://rentigo-xhqk.onrender.com/user/${id}`);
 // // //     setCar(ids.data.data);
      
 // // //     console.log(ids.data.data)
@@ -65,7 +65,7 @@
 // // //         {/* LEFT IMAGE */}
 // // //         <div style={{ flex: 1 }}>
 // // //           <img
-// // //             src={`http://localhost:5000/${car.thumbnail}`} alt="Car"
+// // //             src={`https://rentigo-xhqk.onrender.com/${car.thumbnail}`} alt="Car"
 // // //             style={{
 // // //               width: "100%",
 // // //               height: "450px",
@@ -170,7 +170,7 @@
 
 // //   const getCarById = async () => {
 // //     try {
-// //       const response = await axios.get(`http://localhost:5000/user/${id}`);
+// //       const response = await axios.get(`https://rentigo-xhqk.onrender.com/user/${id}`);
 // //       setCar(response.data.data);
 // //       setLoading(false);
 // //     } catch (err) {
@@ -225,7 +225,7 @@
 // //             <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-cyan-400 opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
 // //             <div className="relative overflow-hidden rounded-[2rem] bg-white shadow-2xl">
 // //               <img
-// //                 src={`http://localhost:5000/${car.thumbnail}`}
+// //                 src={`https://rentigo-xhqk.onrender.com/${car.thumbnail}`}
 // //                 alt={car.name}
 // //                 className="h-[400px] md:h-[550px] w-full object-cover transition-transform duration-700 hover:scale-105"
 // //               />
@@ -372,7 +372,7 @@ const [isBooked,setBooked]=useState(false);
   // Fetch car details by ID
   const getCarById = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/user/${id}`);
+      const res = await axios.get(`https://rentigo-xhqk.onrender.com/user/${id}`);
       setCar(res.data.data);
       setFormData((prev) => ({ ...prev, carBooked: res.data.data._id }));
       setLoading(false);
@@ -386,7 +386,7 @@ const [isBooked,setBooked]=useState(false);
   // Fetch all available cars for dropdown
   const getAvailableCars = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/user");
+      const res = await axios.get("https://rentigo-xhqk.onrender.com/user");
       setAvailableCars(res.data.data);
     } catch (err) {
       console.error(err);
@@ -430,7 +430,7 @@ const [isBooked,setBooked]=useState(false);
   // Confirm booking and send to backend
   const confirmBooking = async () => {
     try {
-      await axios.post("http://localhost:5000/user/createVendor", formData);
+      await axios.post("https://rentigo-xhqk.onrender.com/user/createVendor", formData);
       
       setShowModal(false);
       setBooked(true);
@@ -511,7 +511,7 @@ const handlePayment = async () => {
     }
 
     // 2️⃣ Create order from backend
-    const { data } = await axios.post("http://localhost:5000/user/orderid", { amount: summary.total });
+    const { data } = await axios.post("https://rentigo-xhqk.onrender.com/user/orderid", { amount: summary.total });
     if (!data.status) {
       Swal.fire("Error", "Order creation failed", "error");
       return;
@@ -531,7 +531,7 @@ const handlePayment = async () => {
         try {
           // verify payment
           const verifyRes = await axios.get(
-            `http://localhost:5000/user/verify/${response.razorpay_payment_id}`,
+            `https://rentigo-xhqk.onrender.com/user/verify/${response.razorpay_payment_id}`,
             { params: { order_id: response.razorpay_order_id, signature: response.razorpay_signature } }
           );
 
@@ -581,7 +581,7 @@ const handlePayment = async () => {
             <div className="absolute -inset-1 rounded-[2.5rem] bg-gradient-to-r from-blue-600 to-cyan-400 opacity-20 blur transition duration-1000 group-hover:opacity-40"></div>
             <div className="relative overflow-hidden rounded-[2rem] bg-white shadow-2xl">
               <img
-                src={`http://localhost:5000/${car.thumbnail}`}
+                src={`https://rentigo-xhqk.onrender.com/${car.thumbnail}`}
                 alt={car.name}
                 className="h-[400px] md:h-[550px] w-full object-cover"
               />
@@ -788,7 +788,7 @@ export default CarDetails;
 //   const getCarById = async (id) => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:5000/user/${id}`
+//         `https://rentigo-xhqk.onrender.com/user/${id}`
 //       );
 //       setCar(response.data.data);
 //       setLoading(false);
@@ -806,7 +806,7 @@ export default CarDetails;
 
 //   // const getCars=async()=>{
 //   //   try{
-//   // const gettss=await axios.get("http://localhost:5000/user");
+//   // const gettss=await axios.get("https://rentigo-xhqk.onrender.com/user");
 //   // setCarBookedId(gettss.data.data);
 //   // console.log("get in update",gettss.data.data);
 //   //   }catch(err){
@@ -850,7 +850,7 @@ export default CarDetails;
 //   // Confirm Booking (Send to backend)
 //   const confirmBooking = async () => {
 //     try {
-//       await axios.post("http://localhost:5000/user/createVendor", {
+//       await axios.post("https://rentigo-xhqk.onrender.com/user/createVendor", {
 //         name,
 //         mobile,
 //         bookingDate,
@@ -898,7 +898,7 @@ export default CarDetails;
 //           {/* LEFT IMAGE */}
 //           <div className="overflow-hidden rounded-3xl bg-white shadow-2xl">
 //             <img
-//               src={`http://localhost:5000/${car.thumbnail}`}
+//               src={`https://rentigo-xhqk.onrender.com/${car.thumbnail}`}
 //               alt={car.name}
 //               className="h-[500px] w-full object-cover"
 //             />
@@ -1077,7 +1077,7 @@ export default CarDetails;
 //   const getCarById = async () => {
 //     try {
 //       const response = await axios.get(
-//         `http://localhost:5000/user/${id}`
+//         `https://rentigo-xhqk.onrender.com/user/${id}`
 //       );
 //       setCar(response.data.data);
 //       setLoading(false);
@@ -1090,7 +1090,7 @@ export default CarDetails;
 //   // ✅ Get all cars (for dropdown)
 //   const getAllCars = async () => {
 //     try {
-//       const res = await axios.get("http://localhost:5000/user");
+//       const res = await axios.get("https://rentigo-xhqk.onrender.com/user");
 //       setCarList(res.data.data);
 //     } catch (err) {
 //       console.error(err);
@@ -1130,7 +1130,7 @@ export default CarDetails;
 //   // ✅ Confirm Booking
 //   const confirmBooking = async () => {
 //     try {
-//       await axios.post("http://localhost:5000/user/createVendor", {
+//       await axios.post("https://rentigo-xhqk.onrender.com/user/createVendor", {
 //         name,
 //         mobile,
 //         bookingDate,
@@ -1175,7 +1175,7 @@ export default CarDetails;
 //           {/* LEFT */}
 //           <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
 //             <img
-//               src={`http://localhost:5000/${car.thumbnail}`}
+//               src={`https://rentigo-xhqk.onrender.com/${car.thumbnail}`}
 //               alt={car.name}
 //               className="w-full h-[450px] object-cover"
 //             />

@@ -57,7 +57,7 @@ const adds=async(e)=>{
     form.append("price",price);
     form.append("model",model);
     form.append("thumbnail",thumbnail);
-  const add=await axios.post("http://localhost:5000/user/", form)
+  const add=await axios.post("https://rentigo-xhqk.onrender.com/user/", form)
   setSend(add.data);
   setName("");
   setModel("");
