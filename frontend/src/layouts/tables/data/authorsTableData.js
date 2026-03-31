@@ -49,7 +49,7 @@ const [carBookedId,setCarBookedId]=useState([]);
 // const [vendorId,setVendorEdit]=useState(null);
 const [status,setStatus]=useState("Pending");
 const [updates,setUpdate]=useState("");
-
+const [selectedId, setSelectedId] = useState(null);
 
 
 const getCars=async()=>{
@@ -87,6 +87,7 @@ Swal.fire({
   text:"Vendor successfullly updated",
   icon:"success"
 })
+VendorGet();
   }catch(err){
     console.log(err)
     Swal.fire({
@@ -104,6 +105,7 @@ const Deleted=async(id)=>{
   const Delete=await axios.delete(`http://localhost:5000/user/delete/${id}`);
   setDel(Delete);
   console.log(Delete);
+  VendorGet();
   }catch(err){
     console.log(err)
   }
@@ -167,264 +169,159 @@ const Deleted=async(id)=>{
     color:"white"
   }}
   onClick={() => {
-    setEditModal(true),
-    setName(v.name),
-    setMobile(v.mobile),
-    setBookingDate(v.bookingDate),
-    setReturnDate(v.returnDate),
-setCarBooked(v.carBooked?._id || ""),
-    setStatus(v.status)
-    // setVendorEdit(v._id)
-  }}
+  setEditModal(true);
+  setSelectedId(v._id);   
+
+  setName(v.name);
+  setMobile(v.mobile);
+  setBookingDate(v.bookingDate);
+  setReturnDate(v.returnDate);
+  setCarBooked(v.carBooked?._id || "");
+  setStatus(v.status);
+}}
 >
 <FaEdit />
  </button>
 
-         {editModal&&(
-          <div
-  style={{
-    position: "fixed",
-    inset: 0,
-    zIndex: 50,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.1)",
-    backdropFilter: "blur(3px)",
-  }}
->
-  <form
-    style={{
-      width: "50%",
-      maxWidth: "64rem",
-      backgroundColor: "#fff",
-      borderRadius: "1rem",
-      boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)",
-      padding: "2rem",
-      position: "relative",
-    }}
-  >
-    <button
-      type="button"
-      onClick={() => setEditModal(false)}
-      style={{
-        position: "absolute",
-        top: "1rem",
-        right: "1.25rem",
-        fontSize: "2rem",
-        color: "#9ca3af",
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        color:"red"
-      }}
-    >
-      &times;
-    </button>
-
-    <h2
-      style={{
-        fontSize: "1.5rem",
-        fontWeight: "700",
-        color: "#1e293b",
-        marginBottom: "1.5rem",
-      }}
-    >
-    Update Vendor
-    </h2>
-
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "1.5rem",
-      }}
-    >
-        <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }} >Name</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
-          required
- style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Mobile</label>
-        <input
-          type="number"
-          value={mobile}
-          onChange={(e) => setMobile(e.target.value)}
-          placeholder="Enter mobile"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}            />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Booking date</label>
-        <input
-          type="date"
-          value={bookingDate}
-          onChange={(e) => setBookingDate(e.target.value)}
-          placeholder=" enter booking date"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
+        {editModal && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm px-4">
+    
+    {/* Modal Box */}
+    <form className="w-full max-w-4xl bg-white rounded-2xl shadow-xl p-6 md:p-10 relative max-h-[90vh] overflow-y-auto">
       
-      
-           <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Return Date</label>
-        <input
-          type="date"
-          value={returnDate}
-          onChange={(e) => setReturnDate(e.target.value)}
-          placeholder="enter return date"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
+      {/* Close Button */}
+      <button
+        type="button"
+        onClick={() => setEditModal(false)}
+        className="absolute top-4 right-5 text-2xl text-red-500 hover:scale-110 transition"
+      >
+        &times;
+      </button>
 
-       
+      {/* Title */}
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
+        Update Vendor
+      </h2>
 
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Car Booked</label>
-        <select
-          type="text"
-          value={carBooked}
-          onChange={(e) => setCarBooked(e.target.value)}
-          placeholder=" enter booking date"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        > 
-    <option value="">select the car</option>
-      {carBookedId.map((v)=>(
-<option key={v._id} value={v._id}>{v.name}</option>
-      ))}
-    </select>
-      </div>
+      {/* Form Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 
+        {/* Name */}
         <div>
-          <lable style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Status</lable>
-  
-  <select
-           value={status}
-          onChange={(e) => setStatus(e.target.value)}
-        
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        >
-      <option value="">select status</option>
-      <option value="Pending">Pending</option>
-      <option value="Confirmed">Confirmed</option>
-      <option value="Canceled">Canceled</option>
-      {/* <option>select status</option> */}
-    </select>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Name
+          </label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter name"
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
         </div>
 
-       
+        {/* Mobile */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Mobile
+          </label>
+          <input
+            type="number"
+            value={mobile}
+            onChange={(e) => setMobile(e.target.value)}
+            placeholder="Enter mobile"
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-       
+        {/* Booking Date */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Booking Date
+          </label>
+          <input
+            type="date"
+            value={bookingDate}
+            onChange={(e) => setBookingDate(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-        
-    </div>
+        {/* Return Date */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Return Date
+          </label>
+          <input
+            type="date"
+            value={returnDate}
+            onChange={(e) => setReturnDate(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "2rem",
-      }}
-    >
-      <button
-        type="submit"
-        onClick={(e)=>{e.preventDefault();
-          updateVendor(v._id)}}
-        style={{
-          backgroundColor: "#4f46e5",
-          color: "#fff",
-          padding: "0.5rem 2rem",
-          borderRadius: "0.5rem",
-          border: "none",
-          fontWeight: "600",
-          cursor: "pointer",
-        }}>
-        Update Vendor
-      </button>
-    </div>
-  </form>
-</div>
-         )}
+        {/* Car */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Car Booked
+          </label>
+          <select
+            value={carBooked}
+            onChange={(e) => setCarBooked(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          >
+            <option value="">Select Car</option>
+            {carBookedId.map((v) => (
+              <option key={v._id} value={v._id}>
+                {v.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Status */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-600 mb-1">
+            Status
+          </label>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            required
+            className="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+          >
+            <option value="">Select Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Canceled">Canceled</option>
+          </select>
+        </div>
+
+      </div>
+
+      {/* Button */}
+      <div className="flex justify-center mt-8">
+        <button
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+updateVendor(selectedId);
+         }}
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-md transition active:scale-95"
+        >
+          Update Vendor
+        </button>
+      </div>
+
+    </form>
+  </div>
+)}
+         
          
          
           <button style={{padding:"5px",paddingInline:"2px",borderRadius:"7px",

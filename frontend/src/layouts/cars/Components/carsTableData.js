@@ -51,7 +51,7 @@ const [getData,setGetData]=useState([]);
   useEffect(()=>{
 gets()
   },[]);
-
+const [selectedId, setSelectedId] = useState(null);
 const [name,setName]=useState("");
 const [model,setModel]=useState("");
 const [description,setDescription]=useState("");
@@ -86,7 +86,7 @@ Swal.fire({
   text:"successfully updated the Car data",
   icon:"success"
 })
- 
+ gets()
      }catch(err){
       console.log(err.message);
       Swal.fire({
@@ -103,7 +103,7 @@ const [deletedd,setDeleted]=useState({});
     try{
 const Deleted=await axios.delete(`http://localhost:5000/user/${id}`);
 setDeleted(Deleted.data);
- 
+ gets();
      }catch(err){
       console.log(err.message)
     }
@@ -134,325 +134,165 @@ setDeleted(Deleted.data);
         action:<span >
           <button style={{padding:"5px",paddingInline:"10px",
         backgroundColor:"#48abfb",borderRadius:"7px",border:"none",cursor:"pointer",color:"white"}}
-        onClick={()=>{setEditModal(true),
-          
-setName(v.name),
-setCarnumber(v.car_number),
-setDescription(v.description),
-setFueltype(v.fuel_type),
-setModel(v.model),
-setType(v.type),
-setSeat(v.seat),
-setPrice(v.price),
-setThumbnail(v.thumbnail)
+       onClick={() => {
+  setEditModal(true);
+  setSelectedId(v._id);   
+
+  setName(v.name);
+  setCarnumber(v.car_number);
+  setDescription(v.description);
+  setFueltype(v.fuel_type);
+  setModel(v.model);
+  setType(v.type);
+  setSeat(v.seat);
+  setPrice(v.price);
+  setThumbnail(v.thumbnail);
 }}><FaEdit />
  </button>
-        {editModal &&(
+    {editModal && (
+  <div className="fixed inset-0 z-50 bg-black/60 flex items-end sm:items-center justify-center px-2">
 
-<div
-  style={{
-    position: "fixed",
-    inset: 0,
-    zIndex: 50,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0,0,0,0.1)",
-    backdropFilter: "blur(1px)",
+    {/* Modal */}
+    <div className="w-full sm:max-w-2xl bg-white rounded-t-2xl sm:rounded-2xl shadow-xl 
+                    max-h-[90vh] overflow-y-auto">
+
+      {/* Header */}
+      <div className="flex justify-between items-center px-4 py-3 border-b sticky top-0 bg-white">
+        <h2 className="text-lg font-semibold">Update Car</h2>
+        <button
+  onClick={() => {
+    console.log("close clicked");
+    setEditModal(false);
   }}
+  className="text-xl text-red-500 cursor-pointer font-bold"
 >
-  <form
-    style={{
-      width: "50%",
-      maxWidth: "64rem",
-      backgroundColor: "#fff",
-      borderRadius: "1rem",
-      boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)",
-      padding: "2rem",
-      position: "relative",
-    }}
-  >
-    <button
-      type="button"
-      onClick={() => setEditModal(false)}
-      style={{
-        position: "absolute",
-        top: "1rem",
-        right: "1.25rem",
-        fontSize: "2rem",
-        color: "#9ca3af",
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        color:"red"
-      }}
-    >
-      &times;
-    </button>
+  &times;
+</button>
+      </div>
 
-    <h2
-      style={{
-        fontSize: "1.5rem",
-        fontWeight: "700",
-        color: "#1e293b",
-        marginBottom: "1.5rem",
-      }}
-    >
-      Add New Post
-    </h2>
+      {/* Form */}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          updates(selectedId);
+        }}
+        className="p-4 space-y-4"
+      >
 
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2, 1fr)",
-        gap: "1.5rem",
-      }}
-    >
+        {/* Name */}
         <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",                                                                                                                                                                                        
-  }} >Name</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Enter name"
-          required
- style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Model</label>
-        <input
-          type="number"
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          placeholder="Enter model"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}            />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Description</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder=" enter short descritption"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Seat</label>
-        <input
-          type="number"
-          value={seat}
-          onChange={(e) => setSeat(e.target.value)}
-          placeholder="enter seat"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
-
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }} >Price</label>
-        <input
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="enter price"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
-
-        <div>
-          <lable style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }}>Car Number</lable>
-  <input
-          type="text"
-          pattern="[A-Z]+"
-        
-          value={car_number}
-          onChange={(e) => setCarnumber(e.target.value)}
-          placeholder="enter car number"
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
+          <label className="text-xs text-gray-600">Name</label>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full mt-1 p-2 border rounded-md text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          />
         </div>
 
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }} >Select Fuel</label>
-        <select
-          value={fuel_type}
-          onChange={(e) => setFueltype(e.target.value)}
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        >
-          <option value="">Select Fuel type</option>
-          <option value="Petrol">Petrol</option>
-          <option value="Diesel">Diesel</option>
-          <option value="CNG">CNG</option>
-          <option value="Electric">Electric</option>
-         </select>
-      </div>
+        {/* Model */}
+        <div>
+          <label className="text-xs text-gray-600">Model</label>
+          <input
+            type="number"
+            value={model}
+            onChange={(e) => setModel(e.target.value)}
+            className="w-full mt-1 p-2 border rounded-md text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-       <div>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }} >Type</label>
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        >
-          <option value="">Select Type</option>
-          <option value="XUV">XUV</option>
-          <option value="SUV">SUV</option>
-          <option value="HATCHBACK">HATCHBACK</option>
-          <option value="SEDAN"> SEDAN</option>
-        </select>
-      </div>
+        {/* Description */}
+        <div>
+          <label className="text-xs text-gray-600">Description</label>
+          <input
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-full mt-1 p-2 border rounded-md text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+          />
+        </div>
 
-       <div style={{ gridColumn: "1 / -1" }}>
-        <label style={{
-    display: "block",
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#374151",
-    marginBottom: "4px",
-  }} >Thumbnail</label>
-        <input
-          type="file"
-          onChange={(e) => setThumbnail(e.target.files[0])}
-          required
-style={{
-      width: "100%",
-      padding: "10px 16px",
-      borderRadius: "8px",
-      border: "1px solid #d1d5db",
-      outline: "none",
-    }}        />
-      </div>
+        {/* Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+          <div>
+            <label className="text-xs text-gray-600">Seat</label>
+            <input
+              type="number"
+              value={seat}
+              onChange={(e) => setSeat(e.target.value)}
+              className="w-full mt-1 p-2 border rounded-md text-sm"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-gray-600">Price</label>
+            <input
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="w-full mt-1 p-2 border rounded-md text-sm"
+            />
+          </div>
+
+        </div>
+
+        {/* Car Number */}
+        <div>
+          <label className="text-xs text-gray-600">Car Number</label>
+          <input
+            value={car_number}
+            onChange={(e) => setCarnumber(e.target.value)}
+            className="w-full mt-1 p-2 border rounded-md text-sm"
+          />
+        </div>
+
+        {/* Dropdowns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <select
+            value={fuel_type}
+            onChange={(e) => setFueltype(e.target.value)}
+            className="p-2 border rounded-md text-sm"
+          >
+            <option value="">Select Fuel</option>
+            <option>Petrol</option>
+            <option>Diesel</option>
+            <option>CNG</option>
+            <option>Electric</option>
+          </select>
+
+          <select
+            value={type}
+            onChange={(e) => setType(e.target.value)}
+            className="p-2 border rounded-md text-sm"
+          >
+            <option value="">Select Type</option>
+            <option>SUV</option>
+            <option>SEDAN</option>
+            <option>XUV</option>
+            <option>HATCHBACK</option>
+          </select>
+        </div>
+
+        {/* File */}
+        <div>
+          <label className="text-xs text-gray-600">Thumbnail</label>
+          <input
+            type="file"
+            onChange={(e) => setThumbnail(e.target.files[0])}
+            className="w-full mt-1 text-sm"
+          />
+        </div>
+
+        {/* Button */}
+        <button
+          type="submit"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md text-sm font-medium transition"
+        >
+          Update Car
+        </button>
+
+      </form>
     </div>
-
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        marginTop: "2rem",
-      }}
-    >
-      <button
-        type="submit"
-        onClick={(e)=>{
-          e.preventDefault();
-          updates(v._id)}}
-        style={{
-          backgroundColor: "#4f46e5",
-          color: "#fff",
-          padding: "0.5rem 2rem",
-          borderRadius: "0.5rem",
-          border: "none",
-          fontWeight: "600",
-          cursor: "pointer",
-        }}
-
-      >
-        Add Post
-      </button>
-    </div>
-  </form>
-</div>
-
+  </div>
 )}
          <button style={{padding:"5px",paddingInline:"7px",marginLeft:"2px",borderRadius:"7px",
          border:"none",cursor:"pointer",backgroundColor:"#fd3f2e" ,color:"white"
